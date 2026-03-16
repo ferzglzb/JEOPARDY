@@ -131,52 +131,70 @@ let crawlInterval = null;
 export function playStarWarsCrawlTheme() {
   stopCrawlTheme();
 
-  // Main Star Wars-inspired melody: iconic opening intervals
-  // Bb major → F → Eb → Bb pattern (simplified)
+  // Main Star Wars-inspired melody, played slower for more epic feel
   const theme = [
-    // Opening fanfare
+    // Intro / pick-up
+    [466, 0.6, 'triangle'],   // Bb4
+    [698, 0.6, 'triangle'],   // F5
+    [622, 0.25, 'triangle'],  // Eb5
+    [587, 0.25, 'triangle'],  // D5
+    [523, 0.25, 'triangle'],  // C5
+    [932, 0.8, 'sine'],       // Bb5
+
+    [698, 0.5, 'triangle'],   // F5
+    [622, 0.25, 'triangle'],  // Eb5
+    [587, 0.25, 'triangle'],  // D5
+    [523, 0.25, 'triangle'],  // C5
+    [932, 0.8, 'sine'],       // Bb5
+
+    [698, 0.5, 'triangle'],   // F5
+    [622, 0.25, 'triangle'],  // Eb5
+    [587, 0.25, 'triangle'],  // D5
+    [622, 0.25, 'triangle'],  // Eb5
+    [523, 0.9, 'sine'],       // C5
+
+    // Repeat section for extra length
     [466, 0.4, 'triangle'],   // Bb4
-    [698, 0.4, 'triangle'],   // F5
-    [622, 0.15, 'triangle'],  // Eb5
-    [587, 0.15, 'triangle'],  // D5
-    [523, 0.15, 'triangle'],  // C5
-    [932, 0.5, 'sine'],       // Bb5
+    [466, 0.2, 'triangle'],   // Bb4
+    [466, 0.2, 'triangle'],   // Bb4
+    [698, 0.6, 'triangle'],   // F5
+    [622, 0.25, 'triangle'],  // Eb5
+    [587, 0.25, 'triangle'],  // D5
+    [523, 0.25, 'triangle'],  // C5
+    [932, 0.8, 'sine'],       // Bb5
 
-    [698, 0.35, 'triangle'],  // F5
-    [622, 0.15, 'triangle'],  // Eb5
-    [587, 0.15, 'triangle'],  // D5
-    [523, 0.15, 'triangle'],  // C5
-    [932, 0.5, 'sine'],       // Bb5
-
-    [698, 0.35, 'triangle'],  // F5
-    [622, 0.15, 'triangle'],  // Eb5
-    [587, 0.15, 'triangle'],  // D5
-    [622, 0.15, 'triangle'],  // Eb5
-    [523, 0.6, 'sine'],       // C5
+    [698, 0.5, 'triangle'],   // F5
+    [622, 0.25, 'triangle'],  // Eb5
+    [587, 0.25, 'triangle'],  // D5
+    [622, 0.25, 'triangle'],  // Eb5
+    [523, 1.2, 'sine'],       // C5 (long resolve)
   ];
 
   playMelody(theme, 0.09);
 
-  // Repeat ambient bass drone after main theme
+  // Extend ambient bass drone to last for the rest of the 50s crawl
   let droneCount = 0;
-  crawlInterval = setInterval(() => {
-    droneCount++;
-    if (droneCount > 30) {
-      stopCrawlTheme();
-      return;
-    }
-    const ctx = getCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = [116, 146, 130, 146][droneCount % 4]; // Bb2, D3, C3
-    gain.gain.setValueAtTime(0.04, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.8);
-  }, 500);
+  // Start drone after the melody finishes (~10 seconds in)
+  setTimeout(() => {
+    crawlInterval = setInterval(() => {
+      droneCount++;
+      if (droneCount > 70) { // Approx 35 seconds of drone
+        stopCrawlTheme();
+        return;
+      }
+      const ctx = getCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = [116, 146, 130, 146][droneCount % 4];
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.8);
+    }, 500);
+  }, 10500);
 }
 
 export function stopCrawlTheme() {

@@ -75,7 +75,7 @@ function StarWarsCrawl({ onFinish }) {
           style={{
             transformOrigin: '50% 100%',
             transform: 'rotateX(25deg)',
-            animation: 'starWarsCrawl 22s linear forwards',
+            animation: 'starWarsCrawl 55s linear forwards',
             bottom: '0',
           }}
         >
@@ -219,6 +219,34 @@ function StarWarsCrawl({ onFinish }) {
               <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
                 — Sócrates
               </p>
+
+              <p className="text-sm text-yellow-200/50 italic tracking-wider max-w-md mx-auto leading-relaxed mt-6">
+                "Nadie se baña en el río dos veces porque todo cambia en el río y en el que se baña"
+              </p>
+              <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+                — Heráclito
+              </p>
+
+              <p className="text-sm text-yellow-200/50 italic tracking-wider max-w-md mx-auto leading-relaxed mt-6">
+                "Busco a un hombre honesto"
+              </p>
+              <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+                — Diógenes de Sinope
+              </p>
+              
+              <p className="text-sm text-yellow-200/50 italic tracking-wider max-w-md mx-auto leading-relaxed mt-6">
+                "El sabio no se lamenta de lo que no tiene, sino que se alegra de lo que tiene"
+              </p>
+              <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+                — Epicteto
+              </p>
+
+              <p className="text-sm text-yellow-200/50 italic tracking-wider max-w-md mx-auto leading-relaxed mt-6">
+                "Yo no soy un ateniense ni un griego, sino un ciudadano del mundo"
+              </p>
+              <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+                — Sócrates
+              </p>
             </div>
 
             <div className="greek-border w-24 mx-auto my-8 opacity-20" />
@@ -280,7 +308,7 @@ function EndScreen({ players, onRestart }) {
 
   useEffect(() => {
     if (showCrawl) {
-      const timer = setTimeout(() => handleCrawlFinish(), 23000);
+      const timer = setTimeout(() => handleCrawlFinish(), 58000);
       return () => clearTimeout(timer);
     }
   }, [showCrawl]);
