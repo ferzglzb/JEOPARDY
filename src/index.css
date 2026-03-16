@@ -1,9 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-slate-900 text-white font-sans;
+  :root {
+    --gold: #d4a853;
+    --gold-bright: #f0d078;
+    --gold-glow: rgba(212, 168, 83, 0.4);
+    --navy: #0a0e27;
+    --navy-light: #141a3d;
+    --navy-mid: #1a2248;
+    --parchment: #f5e6c8;
   }
+
+  body {
+    font-family: 'Philosopher', 'Georgia', serif;
+    background: var(--navy);
+    color: #f0f0f0;
+    overflow-x: hidden;
+  }
+
+  * {
+    scrollbar-width: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   FLOATING PARTICLE BACKGROUND  
+   ═══════════════════════════════════════════ */
+.philosophy-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.philosophy-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 168, 83, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(100, 60, 180, 0.06), transparent),
+    radial-gradient(ellipse 60% 40% at 20% 100%, rgba(40, 80, 160, 0.06), transparent);
+}
+
+/* Greek column decorative borders */
+.greek-border {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='12' viewBox='0 0 40 12'%3E%3Cpath d='M0 6 L5 0 L10 6 L15 0 L20 6 L25 0 L30 6 L35 0 L40 6' stroke='%23d4a853' stroke-width='1.5' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+  height: 12px;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS  
+   ═══════════════════════════════════════════ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(1deg); }
+  75% { transform: translateY(4px) rotate(-1deg); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px var(--gold-glow), 0 0 10px transparent; }
+  50% { box-shadow: 0 0 15px var(--gold-glow), 0 0 30px rgba(212, 168, 83, 0.15); }
+}
+
+@keyframes pulseGlowText {
+  0%, 100% { text-shadow: 0 0 10px var(--gold-glow); }
+  50% { text-shadow: 0 0 25px var(--gold-glow), 0 0 50px rgba(212, 168, 83, 0.2); }
+}
+
+@keyframes rotate360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes confettiDrop {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes revealFlip {
+  0% { transform: perspective(600px) rotateX(90deg); opacity: 0; }
+  100% { transform: perspective(600px) rotateX(0deg); opacity: 1; }
+}
+
+@keyframes borderChase {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 300% 0%; }
+}
+
+@keyframes symbolFloat {
+  0%, 100% { opacity: 0.06; transform: translateY(0) scale(1); }
+  50% { opacity: 0.12; transform: translateY(-20px) scale(1.05); }
+}
+
+/* ═══════════════════════════════════════════
+   UTILITY CLASSES  
+   ═══════════════════════════════════════════ */
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fadeInScale {
+  animation: fadeInScale 0.5s ease-out forwards;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.4s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-floatSlow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-pulseGlow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 40%, var(--gold) 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-revealFlip {
+  animation: revealFlip 0.6s ease-out forwards;
+}
+
+.gold-text {
+  color: var(--gold);
+}
+
+.gold-border {
+  border-color: var(--gold);
+}
+
+.gold-glow {
+  box-shadow: 0 0 15px var(--gold-glow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.gold-glow-strong {
+  box-shadow: 0 0 25px var(--gold-glow), 0 0 50px rgba(212, 168, 83, 0.15);
+}
+
+/* Card with 3D tilt on hover */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.card-3d:hover {
+  transform: perspective(800px) rotateX(-3deg) rotateY(3deg) translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--gold-glow);
+}
+
+/* Glassmorphism panels */
+.glass-panel {
+  background: rgba(20, 26, 61, 0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(212, 168, 83, 0.15);
+}
+
+/* Philosophy symbol decorations */
+.phi-symbol::before {
+  content: 'Φ';
+  font-family: 'Cinzel', serif;
+  position: absolute;
+  font-size: 120px;
+  color: rgba(212, 168, 83, 0.04);
+  pointer-events: none;
+  animation: symbolFloat 10s ease-in-out infinite;
+}
+
+/* Stagger animation delays for cards */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.4s; }
+.stagger-9 { animation-delay: 0.45s; }
+.stagger-10 { animation-delay: 0.5s; }
+.stagger-11 { animation-delay: 0.55s; }
+.stagger-12 { animation-delay: 0.6s; }
+.stagger-13 { animation-delay: 0.65s; }
+.stagger-14 { animation-delay: 0.7s; }
+.stagger-15 { animation-delay: 0.75s; }
+
+/* Confetti pieces */
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  animation: confettiDrop linear forwards;
 }
