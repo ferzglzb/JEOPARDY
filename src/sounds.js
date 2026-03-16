@@ -170,7 +170,7 @@ export function playStarWarsCrawlTheme() {
     [523, 1.2, 'sine'],       // C5 (long resolve)
   ];
 
-  playMelody(theme, 0.09);
+  playMelody(theme, 0.13);
 
   // Extend ambient bass drone to last for the rest of the 50s crawl
   let droneCount = 0;
@@ -178,7 +178,7 @@ export function playStarWarsCrawlTheme() {
   setTimeout(() => {
     crawlInterval = setInterval(() => {
       droneCount++;
-      if (droneCount > 70) { // Approx 35 seconds of drone
+      if (droneCount > 110) { // Approx 55 seconds of drone
         stopCrawlTheme();
         return;
       }
@@ -194,7 +194,7 @@ export function playStarWarsCrawlTheme() {
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.8);
     }, 500);
-  }, 10500);
+  }, 12500);
 }
 
 export function stopCrawlTheme() {
