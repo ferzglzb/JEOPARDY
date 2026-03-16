@@ -135,7 +135,7 @@
 
 @keyframes starWarsCrawl {
   0% { top: 100%; }
-  100% { top: -280%; }
+  100% { top: -450%; }
 }
 
 @keyframes twinkle {

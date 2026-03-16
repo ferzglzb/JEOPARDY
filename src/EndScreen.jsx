@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { sfxVictoryFanfare, playStarWarsCrawlTheme, stopCrawlTheme } from './sounds';
 
 function Confetti() {
   const colors = ['#d4a853', '#f0d078', '#6366f1', '#a855f7', '#22d3ee', '#f43f5e', '#4ade80'];
@@ -38,11 +39,16 @@ function Confetti() {
    STAR WARS STYLE CREDITS CRAWL
    ═══════════════════════════════════════════ */
 function StarWarsCrawl({ onFinish }) {
+  useEffect(() => {
+    playStarWarsCrawlTheme();
+    return () => stopCrawlTheme();
+  }, []);
+
   return (
     <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden">
       {/* Stars background */}
       <div className="absolute inset-0">
-        {Array.from({ length: 80 }, (_, i) => (
+        {Array.from({ length: 100 }, (_, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-white"
@@ -59,35 +65,58 @@ function StarWarsCrawl({ onFinish }) {
         ))}
       </div>
 
-      {/* Perspective container for the crawl */}
+      {/* Perspective container */}
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90%] max-w-[700px]"
-        style={{
-          perspective: '350px',
-          height: '100%',
-        }}
+        style={{ perspective: '350px', height: '100%' }}
       >
         <div
           className="absolute w-full text-center"
           style={{
             transformOrigin: '50% 100%',
             transform: 'rotateX(25deg)',
-            animation: 'starWarsCrawl 16s linear forwards',
+            animation: 'starWarsCrawl 22s linear forwards',
             bottom: '0',
           }}
         >
           <div className="pb-[50vh]">
-            {/* Intro line */}
-            <p
-              className="text-blue-400 text-lg md:text-xl tracking-[0.4em] uppercase mb-12"
-              style={{ fontFamily: "'Cinzel', serif" }}
-            >
-              Jeopardy Filosofía
+            {/* Title */}
+            <p className="text-blue-400 text-base md:text-lg tracking-[0.5em] uppercase mb-6" style={{ fontFamily: "'Cinzel', serif" }}>
+              Hace mucho tiempo, en una clase muy, muy lejana...
             </p>
 
-            {/* Main crawl text */}
+            <h1
+              className="text-4xl md:text-6xl font-black tracking-[0.15em] mb-4"
+              style={{
+                fontFamily: "'Cinzel', serif",
+                color: '#d4a853',
+                textShadow: '0 0 30px rgba(212, 168, 83, 0.6)',
+              }}
+            >
+              JEOPARDY!
+            </h1>
             <h2
-              className="text-3xl md:text-5xl font-black mb-8 tracking-wider uppercase"
+              className="text-2xl md:text-3xl font-bold tracking-[0.4em] text-yellow-200/80 mb-12"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              FILOSOFÍA
+            </h2>
+
+            <div className="greek-border w-48 mx-auto my-8 opacity-40" />
+
+            {/* Story paragraph */}
+            <p className="text-base md:text-lg text-yellow-100/90 leading-relaxed max-w-lg mx-auto mb-12 tracking-wide">
+              En un rincón del conocimiento, tres valientes estudiantes se adentraron
+              en los misterios de la filosofía antigua, presocrática y medieval.
+              Desde Tales de Mileto hasta Santo Tomás de Aquino, exploraron las grandes
+              preguntas de la humanidad...
+            </p>
+
+            <div className="greek-border w-32 mx-auto my-8 opacity-30" />
+
+            {/* Credits */}
+            <h3
+              className="text-2xl md:text-4xl font-black mb-10 tracking-wider uppercase"
               style={{
                 fontFamily: "'Cinzel', serif",
                 color: '#d4a853',
@@ -95,32 +124,112 @@ function StarWarsCrawl({ onFinish }) {
               }}
             >
               Hecho por
-            </h2>
+            </h3>
 
-            <div className="space-y-10 mb-16">
-              <p className="text-2xl md:text-4xl font-bold text-yellow-100 tracking-[0.15em]" style={{ fontFamily: "'Cinzel', serif" }}>
-                Fernando Z González
+            <div className="space-y-8 mb-14">
+              <div>
+                <p className="text-2xl md:text-3xl font-bold text-yellow-100 tracking-[0.12em]" style={{ fontFamily: "'Cinzel', serif" }}>
+                  Fernando Z González
+                </p>
+                <p className="text-xs text-yellow-500/50 tracking-[0.3em] uppercase mt-1">Desarrollo & Diseño</p>
+              </div>
+              <div>
+                <p className="text-2xl md:text-3xl font-bold text-yellow-100 tracking-[0.12em]" style={{ fontFamily: "'Cinzel', serif" }}>
+                  Rodrigo Reyna
+                </p>
+                <p className="text-xs text-yellow-500/50 tracking-[0.3em] uppercase mt-1">Investigación & Contenido</p>
+              </div>
+              <div>
+                <p className="text-2xl md:text-3xl font-bold text-yellow-100 tracking-[0.12em]" style={{ fontFamily: "'Cinzel', serif" }}>
+                  Ian Yee
+                </p>
+                <p className="text-xs text-yellow-500/50 tracking-[0.3em] uppercase mt-1">Diseño & Creatividad</p>
+              </div>
+            </div>
+
+            <div className="greek-border w-32 mx-auto my-8 opacity-30" />
+
+            {/* Additional credits */}
+            <div className="space-y-6 mb-14">
+              <div>
+                <p className="text-xs text-yellow-500/40 tracking-[0.3em] uppercase mb-1" style={{ fontFamily: "'Cinzel', serif" }}>
+                  Categorías
+                </p>
+                <p className="text-sm text-yellow-100/60 tracking-wider">
+                  Filosofía Clásica · Filosofía Presocrática · Filosofía Medieval
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-yellow-500/40 tracking-[0.3em] uppercase mb-1" style={{ fontFamily: "'Cinzel', serif" }}>
+                  Filósofos Destacados
+                </p>
+                <p className="text-sm text-yellow-100/60 tracking-wider">
+                  Sócrates · Platón · Aristóteles · Heráclito · Parménides
+                </p>
+                <p className="text-sm text-yellow-100/60 tracking-wider mt-1">
+                  Tales de Mileto · Empédocles · San Agustín · Santo Tomás · Averroes
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-yellow-500/40 tracking-[0.3em] uppercase mb-1" style={{ fontFamily: "'Cinzel', serif" }}>
+                  Tecnologías
+                </p>
+                <p className="text-sm text-yellow-100/60 tracking-wider">
+                  React · Vite · Tailwind CSS · Web Audio API
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-yellow-500/40 tracking-[0.3em] uppercase mb-1" style={{ fontFamily: "'Cinzel', serif" }}>
+                  Materia
+                </p>
+                <p className="text-sm text-yellow-100/60 tracking-wider">
+                  Filosofía · Proyecto Escolar
+                </p>
+              </div>
+            </div>
+
+            <div className="greek-border w-48 mx-auto my-8 opacity-30" />
+
+            {/* Quotes section */}
+            <div className="space-y-6 mb-14">
+              <p className="text-sm text-yellow-200/50 italic tracking-wider max-w-md mx-auto leading-relaxed">
+                "Solo sé que no sé nada"
               </p>
-              <p className="text-2xl md:text-4xl font-bold text-yellow-100 tracking-[0.15em]" style={{ fontFamily: "'Cinzel', serif" }}>
-                Rodrigo Reyna
+              <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+                — Sócrates
               </p>
-              <p className="text-2xl md:text-4xl font-bold text-yellow-100 tracking-[0.15em]" style={{ fontFamily: "'Cinzel', serif" }}>
-                Ian Yee
+
+              <p className="text-sm text-yellow-200/50 italic tracking-wider max-w-md mx-auto leading-relaxed mt-6">
+                "Conócete a ti mismo"
+              </p>
+              <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+                — Inscripción en el Templo de Apolo en Delfos
+              </p>
+
+              <p className="text-sm text-yellow-200/50 italic tracking-wider max-w-md mx-auto leading-relaxed mt-6">
+                "El ser se dice de muchas maneras"
+              </p>
+              <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+                — Aristóteles
+              </p>
+
+              <p className="text-sm text-yellow-200/50 italic tracking-wider max-w-md mx-auto leading-relaxed mt-6">
+                "La vida no examinada no merece ser vivida"
+              </p>
+              <p className="text-[10px] text-yellow-500/30 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+                — Sócrates
               </p>
             </div>
 
-            <div className="greek-border w-48 mx-auto my-10 opacity-40" />
+            <div className="greek-border w-24 mx-auto my-8 opacity-20" />
 
-            <p className="text-base md:text-lg text-yellow-200/60 italic tracking-wider max-w-md mx-auto leading-relaxed mb-8">
-              "Solo sé que no sé nada"
-            </p>
-            <p className="text-sm text-yellow-500/40 tracking-[0.3em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
-              — Sócrates
-            </p>
-
-            <div className="mt-16">
-              <p className="text-xs text-yellow-200/30 tracking-[0.2em] uppercase" style={{ fontFamily: "'Cinzel', serif" }}>
+            {/* Final message */}
+            <div className="mt-8 mb-20">
+              <p className="text-lg text-yellow-200/40 tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'Cinzel', serif" }}>
                 Gracias por jugar
+              </p>
+              <p className="text-xs text-yellow-500/20 tracking-[0.2em]" style={{ fontFamily: "'Cinzel', serif" }}>
+                Que la sabiduría te acompañe
               </p>
             </div>
           </div>
@@ -164,14 +273,14 @@ function EndScreen({ players, onRestart }) {
   };
 
   const handleCrawlFinish = () => {
+    stopCrawlTheme();
     setShowCrawl(false);
     onRestart();
   };
 
-  // Auto-dismiss crawl after animation completes
   useEffect(() => {
     if (showCrawl) {
-      const timer = setTimeout(() => handleCrawlFinish(), 17000);
+      const timer = setTimeout(() => handleCrawlFinish(), 23000);
       return () => clearTimeout(timer);
     }
   }, [showCrawl]);
@@ -185,10 +294,8 @@ function EndScreen({ players, onRestart }) {
 
         <div className={`w-full max-w-2xl transition-all duration-1000 ${showContent ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
           <div className="glass-panel rounded-2xl p-8 md:p-10 relative overflow-hidden">
-            {/* Decorative top bar */}
             <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600" />
 
-            {/* Header */}
             <div className="text-center mb-8">
               <div className="text-5xl mb-3 animate-float">🏛️</div>
               <h1
@@ -200,7 +307,6 @@ function EndScreen({ players, onRestart }) {
               <div className="greek-border w-32 mx-auto my-3" />
             </div>
 
-            {/* Winner announcement */}
             <div className="text-center mb-8">
               {isTie ? (
                 <div className="animate-fadeInUp">
@@ -232,7 +338,6 @@ function EndScreen({ players, onRestart }) {
               )}
             </div>
 
-            {/* Leaderboard */}
             <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-700/50 mb-8">
               <h3 className="text-center text-xs uppercase tracking-[0.3em] text-slate-500 mb-4 pb-2 border-b border-slate-700/50"
                   style={{ fontFamily: "'Cinzel', serif" }}>
@@ -264,7 +369,6 @@ function EndScreen({ players, onRestart }) {
               </div>
             </div>
 
-            {/* Restart button */}
             <div className="text-center">
               <button
                 onClick={handleRestart}
@@ -275,7 +379,6 @@ function EndScreen({ players, onRestart }) {
               </button>
             </div>
 
-            {/* Bottom quote */}
             <div className="text-center mt-6">
               <p className="text-[10px] italic text-slate-600 tracking-wider">
                 "La verdadera sabiduría está en reconocer la propia ignorancia" — Sócrates

@@ -4,6 +4,7 @@ import Board from './Board';
 import QuestionModal from './QuestionModal';
 import EndScreen from './EndScreen';
 import { generateGameCategories } from './data';
+import { initAudio, sfxGameStart, sfxBoardAppear, sfxCardSelect, sfxModalClose, sfxVictoryFanfare, startBackgroundMusic, stopBackgroundMusic } from './sounds';
 
 const PHILOSOPHY_SYMBOLS = ['Φ', 'Ω', 'Σ', 'Ψ', 'Δ', 'Π', 'λ', 'α', 'θ', '∞', '☿', '⚛'];
 
@@ -43,6 +44,7 @@ function App() {
   const totalQuestions = categories.reduce((acc, cat) => acc + cat.questions.length, 0);
 
   const handleStartGame = (playerNames) => {
+    initAudio();
     const initialPlayers = playerNames.map((name, index) => ({
       id: index,
       name,
@@ -51,9 +53,13 @@ function App() {
     }));
     setPlayers(initialPlayers);
     setGameState('PLAYING');
+    sfxGameStart();
+    setTimeout(() => sfxBoardAppear(), 400);
+    startBackgroundMusic();
   };
 
   const handleQuestionSelect = (catIndex, questIndex) => {
+    sfxCardSelect();
     setCurrentQuestion({ catIndex, questIndex });
   };
 
@@ -78,22 +84,26 @@ function App() {
     setQuestionsAnsweredCount(newCount);
 
     if (newCount >= totalQuestions) {
+      stopBackgroundMusic();
+      sfxVictoryFanfare();
       setTimeout(() => setGameState('FINISHED'), 600);
     }
   };
 
   const closeQuestionWithoutAnswering = () => {
+    sfxModalClose();
     setCurrentQuestion(null);
   };
 
   const handleRestart = () => {
+    stopBackgroundMusic();
     setGameState('START');
     setPlayers([]);
     setAnsweredQuestions({});
     setCurrentQuestion(null);
     setQuestionsAnsweredCount(0);
     setActivePlayer(0);
-    setCategories(generateGameCategories()); // New random questions each game!
+    setCategories(generateGameCategories());
   };
 
   return (

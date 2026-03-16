@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { sfxModalOpen, sfxRevealAnswer, sfxCorrect, sfxWrong, startThinkingMusic, stopThinkingMusic } from './sounds';
 
 function QuestionModal({ question, categoryName, players, onScoreUpdate, onComplete, onClose }) {
   const [phase, setPhase] = useState('clue'); // clue → answer → scoring
@@ -7,18 +8,27 @@ function QuestionModal({ question, categoryName, players, onScoreUpdate, onCompl
 
   useEffect(() => {
     requestAnimationFrame(() => setShowEntrance(true));
+    sfxModalOpen();
+    startThinkingMusic();
+    return () => stopThinkingMusic();
   }, []);
 
   const handleReveal = () => {
+    stopThinkingMusic();
+    sfxRevealAnswer();
     setPhase('answer');
   };
 
   const handleJudge = (playerId, isCorrect) => {
+    if (isCorrect) {
+      sfxCorrect();
+    } else {
+      sfxWrong();
+    }
     onScoreUpdate(playerId, question.points, isCorrect);
     const updated = { ...awardedPlayers, [playerId]: isCorrect ? 'correct' : 'wrong' };
     setAwardedPlayers(updated);
 
-    // Auto-close only when ALL players have been judged
     if (Object.keys(updated).length === players.length) {
       setTimeout(() => onComplete(), 1000);
     }
