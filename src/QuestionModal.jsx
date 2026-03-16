@@ -15,9 +15,12 @@ function QuestionModal({ question, categoryName, players, onScoreUpdate, onCompl
 
   const handleJudge = (playerId, isCorrect) => {
     onScoreUpdate(playerId, question.points, isCorrect);
-    setAwardedPlayers(prev => ({ ...prev, [playerId]: isCorrect ? 'correct' : 'wrong' }));
-    if (isCorrect) {
-      setTimeout(() => onComplete(), 800);
+    const updated = { ...awardedPlayers, [playerId]: isCorrect ? 'correct' : 'wrong' };
+    setAwardedPlayers(updated);
+
+    // Auto-close only when ALL players have been judged
+    if (Object.keys(updated).length === players.length) {
+      setTimeout(() => onComplete(), 1000);
     }
   };
 
