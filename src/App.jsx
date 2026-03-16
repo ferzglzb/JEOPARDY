@@ -3,7 +3,7 @@ import StartScreen from './StartScreen';
 import Board from './Board';
 import QuestionModal from './QuestionModal';
 import EndScreen from './EndScreen';
-import { CATEGORIES } from './data';
+import { generateGameCategories } from './data';
 
 const PHILOSOPHY_SYMBOLS = ['Φ', 'Ω', 'Σ', 'Ψ', 'Δ', 'Π', 'λ', 'α', 'θ', '∞', '☿', '⚛'];
 
@@ -38,8 +38,9 @@ function App() {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [activePlayer, setActivePlayer] = useState(0);
   const [questionsAnsweredCount, setQuestionsAnsweredCount] = useState(0);
+  const [categories, setCategories] = useState(() => generateGameCategories());
 
-  const totalQuestions = CATEGORIES.reduce((acc, cat) => acc + cat.questions.length, 0);
+  const totalQuestions = categories.reduce((acc, cat) => acc + cat.questions.length, 0);
 
   const handleStartGame = (playerNames) => {
     const initialPlayers = playerNames.map((name, index) => ({
@@ -92,6 +93,7 @@ function App() {
     setCurrentQuestion(null);
     setQuestionsAnsweredCount(0);
     setActivePlayer(0);
+    setCategories(generateGameCategories()); // New random questions each game!
   };
 
   return (
@@ -160,7 +162,7 @@ function App() {
             {/* Board */}
             <div className="flex-1 min-h-0">
               <Board
-                categories={CATEGORIES}
+                categories={categories}
                 answered={answeredQuestions}
                 onQuestionSelect={handleQuestionSelect}
               />
@@ -177,8 +179,8 @@ function App() {
 
         {currentQuestion && (
           <QuestionModal
-            question={CATEGORIES[currentQuestion.catIndex].questions[currentQuestion.questIndex]}
-            categoryName={CATEGORIES[currentQuestion.catIndex].name}
+            question={categories[currentQuestion.catIndex].questions[currentQuestion.questIndex]}
+            categoryName={categories[currentQuestion.catIndex].name}
             players={players}
             onScoreUpdate={handleScoreUpdate}
             onComplete={() => markQuestionAnswered(currentQuestion.catIndex, currentQuestion.questIndex)}

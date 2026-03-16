@@ -140,6 +140,10 @@ function StartScreen({ onStart }) {
           <p className="text-[10px] text-slate-700 tracking-[0.3em] uppercase">
             3 Categorías · 15 Preguntas · 1 Ganador
           </p>
+          {/* Hidden credits */}
+          <p className="mt-4 text-[8px] text-slate-800 hover:text-slate-500 transition-colors duration-700 tracking-wider select-none cursor-default">
+            Hecho por Fernando Z González · Rodrigo Reyna · Ian Yee
+          </p>
         </div>
       </div>
     </div>
