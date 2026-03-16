@@ -8,7 +8,7 @@ const QUOTES = [
   { text: "El ser se dice de muchas maneras", author: "Aristóteles" },
 ];
 
-function StartScreen({ onStart }) {
+function StartScreen({ onStart, onShowCredits }) {
   const [playerCount, setPlayerCount] = useState(2);
   const [playerNames, setPlayerNames] = useState(['', '']);
   const [currentQuote, setCurrentQuote] = useState(0);
@@ -137,9 +137,17 @@ function StartScreen({ onStart }) {
         {/* Bottom decorative */}
         <div className="text-center mt-6">
           <div className="greek-border w-32 mx-auto mb-2" />
-          <p className="text-[10px] text-slate-700 tracking-[0.3em] uppercase">
+          <p className="text-[10px] text-slate-700 tracking-[0.3em] uppercase mb-4">
             3 Categorías · 15 Preguntas · 1 Ganador
           </p>
+          <button
+            type="button"
+            onClick={onShowCredits}
+            className="text-[10px] text-yellow-600/50 hover:text-yellow-400 transition-colors uppercase tracking-[0.2em]"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            ✧ Ver Créditos ✧
+          </button>
         </div>
       </div>
     </div>

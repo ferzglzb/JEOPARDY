@@ -3,6 +3,7 @@ import StartScreen from './StartScreen';
 import Board from './Board';
 import QuestionModal from './QuestionModal';
 import EndScreen from './EndScreen';
+import StarWarsCrawl from './StarWarsCrawl';
 import { generateGameCategories } from './data';
 import { initAudio, sfxGameStart, sfxBoardAppear, sfxCardSelect, sfxModalClose, sfxVictoryFanfare, startBackgroundMusic, stopBackgroundMusic } from './sounds';
 
@@ -40,6 +41,7 @@ function App() {
   const [activePlayer, setActivePlayer] = useState(0);
   const [questionsAnsweredCount, setQuestionsAnsweredCount] = useState(0);
   const [categories, setCategories] = useState(() => generateGameCategories());
+  const [showCredits, setShowCredits] = useState(false);
 
   const totalQuestions = categories.reduce((acc, cat) => acc + cat.questions.length, 0);
 
@@ -111,7 +113,7 @@ function App() {
       <FloatingSymbols />
 
       <div className="relative z-10">
-        {gameState === 'START' && <StartScreen onStart={handleStartGame} />}
+        {gameState === 'START' && <StartScreen onStart={handleStartGame} onShowCredits={() => setShowCredits(true)} />}
 
         {gameState === 'PLAYING' && (
           <div className="flex flex-col h-screen p-3 md:p-4 max-w-[1600px] mx-auto">
@@ -201,6 +203,8 @@ function App() {
         {gameState === 'FINISHED' && (
           <EndScreen players={players} onRestart={handleRestart} />
         )}
+
+        {showCredits && <StarWarsCrawl onFinish={() => setShowCredits(false)} />}
       </div>
     </div>
   );
